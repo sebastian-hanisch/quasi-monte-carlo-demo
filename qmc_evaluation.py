@@ -335,7 +335,7 @@ def verdict_main(a: Analysis, settings: Settings) -> tuple[str, str]:
     if fo < 0.5:
         kind, tail = "success", "Die Sobol-Folge gewinnt deutlich" + (" – um Größenordnungen." if fo < 0.01 else ".")
     elif fo <= 1.3:
-        kind, tail = "info", "Kaum Gewinn: der Unterschied zum Zufall liegt im Rauschen der Messung (etwa ±20 %)."
+        kind, tail = "info", "Höchstens kleiner Gewinn: ein Faktor zwischen 0,5 und 1,3 ist vom Zufall schwer zu trennen (Messrauschen etwa ±15 % bei 100 Wiederholungen); unterhalb von etwa 0,8 ist der Gewinn klein, aber vorhanden."
     else:
         kind, tail = "warning", "Hier ist die Sobol-Folge schlechter als der Zufall."
     return kind, head + tail + " " + _dim_sentence(a)
@@ -348,7 +348,7 @@ def verdict_curve(a: Analysis) -> tuple[str, str]:
     text = (f"Steigung von log RMSE über log N: Zufall {de(s['mc'], 2)}, Latin Hypercube {de(s['lhs'], 2)}, Sobol mit Verschiebung {de(s['sobol_ds'], 2)}, Sobol mit Owen {de(s['sobol_owen'], 2)}. "
             f"Zufall fällt mit −0,5; ein steilerer Abfall ist der Gewinn der gleichmäßigen Punkte. ")
     if a.integ.dims is not None:
-        text += (f"Latin Hypercube holt nur den additiven Anteil: vorhergesagter Faktor {faktor(a.lhs_pred)}, gemessen {faktor(a.factor_lhs)}. ")
+        text += (f"Latin Hypercube holt nur den additiven Anteil: vorhergesagter Faktor {faktor(a.lhs_pred)}, gemessen {faktor(a.factor_lhs)} (die Vorhersage gilt asymptotisch; bei großer Dimension und endlichem N weicht die Messung ab). ")
     text += "Die Steigung über das ganze Fenster mischt kleine und große N; die asymptotische Rate gilt erst bei großem N und kleiner effektiver Dimension."
     return "info", text
 
@@ -360,7 +360,7 @@ def verdict_dimension(exp: dict, settings: Settings) -> tuple[str, str]:
     text = f"Bei N = {de(exp['N'], 0)}: "
     if low and high:
         text += (f"64 Dimensionen mit abfallenden Gewichten (mittlere Dimension {de(low[0]['dims']['mean_dim'], 2)}) haben den Faktor {faktor(low[0]['factor_owen'])}, "
-                 f"32 Dimensionen mit gleichen Gewichten (mittlere Dimension {de(high[0]['dims']['mean_dim'], 2)}) nur {faktor(high[0]['factor_owen'])}: die nominale Dimension entscheidet nichts, die effektive alles. ")
+                 f"32 Dimensionen mit gleichen Gewichten (mittlere Dimension {de(high[0]['dims']['mean_dim'], 2)}) nur {faktor(high[0]['factor_owen'])}: die nominale Dimension allein sagt wenig, die effektive Dimension und die Glattheit bestimmen den Gewinn. ")
     netz_rows = [r for r in rows if r["kind"] == "netz"]
     if netz_rows:
         text += f"{exp['netz']}: " + "; ".join(f"{r['label']}: mittlere Dimension {de(r['dims']['mean_dim'], 2)}, Faktor {faktor(r['factor_owen'])}" for r in netz_rows) + ". "

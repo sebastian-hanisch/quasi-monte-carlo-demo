@@ -91,8 +91,8 @@ st.markdown(
     """
 Zufallspunkte streuen ungleichmäßig; eine **Sobol-Folge** füllt den Würfel gleichmäßig. Mit **zufälligem Scrambling** (Owen) oder einer **digitalen Verschiebung** bleibt der Schätzer erwartungstreu und
 man bekommt Fehlerbalken. Wie viel das bringt, hängt aber nicht an der Zahl der Eingaben, sondern an der **effektiven Dimension** (wie viele Eingaben wirklich zusammenwirken) und an der **Glattheit**
-des Integranden: ein Polynom gewinnt um Größenordnungen, ein Knick deutlich, ein Sprung mäßig, und bei vielen wirksamen Eingaben verschwindet der Gewinn. Dazu kommen zwei Fallen: der **naive
-Fehlerbalken** (die Punkte wie unabhängig behandelt) ist viel zu groß, und eine Punktzahl, die **keine Zweierpotenz** ist, kostet Genauigkeit.
+des Integranden: ein Polynom gewinnt um Größenordnungen; Knick und Sprung gewinnen meist mäßig bis deutlich, ihre Reihenfolge hängt vom Netz ab, und bei vielen wirksamen Eingaben schrumpft der Gewinn. Dazu kommen zwei Fallen: der **naive
+Fehlerbalken** (die Punkte wie unabhängig behandelt) ist bei großem Gewinn viel zu groß (bis 34-fach), bei kleinem Gewinn nur wenig, und eine Punktzahl, die **keine Zweierpotenz** ist, kostet Genauigkeit.
 
 Weiter unten: **🔬 fünf Experimente**, **🧪 Spielwiese**, **🚧 Wo die Annahmen enden** und die Expander **⚠️ Annahmen, Grenzen und bekannte Probleme** und **📐 Mathematische Formulierung**.
 """
@@ -101,7 +101,7 @@ Weiter unten: **🔬 fünf Experimente**, **🧪 Spielwiese**, **🚧 Wo die Ann
 with st.expander("So funktioniert randomisiertes Quasi-Monte-Carlo", expanded=True):
     st.markdown(
         """
-1. **Sobol-Folge:** Punkte aus Richtungszahlen und dem Gray-Code des Zählers. Jede Menge aus N = 2ᵏ Punkten ist ein **Netz**: in jeder Einzelkoordinate liegt genau ein Punkt in jedem Intervall der Länge 2⁻ᵏ,
+1. **Sobol-Folge:** Punkte aus Richtungszahlen und dem Gray-Code des Zählers. Die ersten N = 2ᵏ Punkte bilden ein **Netz**: in jeder Einzelkoordinate liegt genau ein Punkt in jedem Intervall der Länge 2⁻ᵏ,
    und auch in vielen mehrdimensionalen Kästchen liegt die richtige Zahl.
 2. **Randomisieren:** Bei der **digitalen Verschiebung** wird jede Koordinate mit einer Zufallszahl »verknüpft« (XOR der Bits). Beim **Owen-Scrambling** wird jedes Bit mit einem Zufallsbit gekippt, das nur von den höheren Bits
    abhängt. Beides erhält die Netz-Eigenschaft und macht jeden Punkt gleichverteilt, der Schätzer bleibt erwartungstreu.
@@ -283,11 +283,11 @@ st.markdown(
     """
 | Annahme | Was passiert, wenn sie verletzt ist | Wer setzt an |
 |---|---|---|
-| **Der Integrand ist glatt** | Bei Knicken und vor allem Sprüngen bleibt nur ein mäßiger Gewinn und die Steigung liegt nahe an der des Zufalls (Experimente 1 und 3). | – |
-| **Die effektive Dimension ist klein** | Wirken viele Eingaben zusammen, schrumpft der Gewinn auf einen kleinen Faktor (Experiment 2); die nominale Dimension allein sagt nichts. | – |
+| **Der Integrand ist glatt** | Bei Knicken und vor allem Sprüngen bleibt meist nur ein mäßiger Gewinn und die Steigung liegt zwischen der des Zufalls (−0,5) und −0,75 (Experimente 1 und 3). | – |
+| **Die effektive Dimension ist klein** | Wirken viele Eingaben zusammen, schrumpft der Gewinn auf einen kleinen Faktor (Experiment 2); die nominale Dimension allein sagt wenig. | – |
 | **Die Punktzahl ist eine Zweierpotenz** | Mit 1000 statt 1024 Punkten geht die Netz-Eigenschaft teilweise verloren (Experiment 5). | – |
-| **Fehlerbalken aus Randomisierungen** | Der naive Standardfehler ist viel zu groß; K Blöcke decken richtig ab, kosten aber Genauigkeit (Experiment 4). | – |
-| **Wichtige Koordinaten stehen vorn** | Bei abfallenden Gewichten ist die Reihenfolge entscheidend, an symmetrischen Netzen nicht messbar (Experiment 5). | – |
+| **Fehlerbalken aus Randomisierungen** | Der naive Standardfehler ist bei großem Gewinn viel zu groß (bis 34-fach), bei kleinem Gewinn nur wenig; K Blöcke decken richtig ab, kosten aber Genauigkeit (Experiment 4). | – |
+| **Wichtige Koordinaten stehen vorn** | Bei abfallenden Gewichten kostet eine ungünstige Reihenfolge etwa das 6- bis 8-Fache im mittleren quadratischen Fehler (Experiment 5); an den Netzen ist der Unterschied klein (bis etwa 20 %, nicht in der App gemessen). | – |
 | **Die Auswertung ist teuer** | Das Scrambling kostet bei billiger Auswertung mehr Zeit als es spart; der Gewinn gilt in Modellauswertungen. | – |
 | **Nur Haupteffekte gleichmäßig abdecken** | Das leistet Latin Hypercube; die Sobol-Folge deckt zusätzlich Wechselwirkungen niedriger Ordnung ab. | `latin-hypercube-demo` (Stück 5) |
 | **Welche Eingabe treibt die Varianz** | Das ist eine eigene Frage (Sobol-Indizes). | Stück 10 der Linie |

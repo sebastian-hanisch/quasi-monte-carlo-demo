@@ -36,7 +36,7 @@ def test_um_groessenordnungen_unterhalb_der_schwelle():
 
 def test_kein_gewinn_im_rauschen_und_verlust():
     kind, text = ev.verdict_main(_a(factor_owen=1.1, ratio=0.95), S)
-    assert kind == "info" and "Kaum Gewinn" in text and "±20 %" in text
+    assert kind == "info" and "Höchstens kleiner Gewinn" in text and "±15 %" in text
     kind, text = ev.verdict_main(_a(factor_owen=1.5, ratio=0.8), S)
     assert kind == "warning" and "schlechter als der Zufall" in text
 

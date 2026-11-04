@@ -24,7 +24,7 @@ def _texte(at) -> str:
 
 
 @pytest.mark.parametrize("key,fragment", [
-    ("run_dimension", "die nominale Dimension entscheidet nichts"),
+    ("run_dimension", "die nominale Dimension allein sagt wenig"),
     ("run_ladder", "Rangfolge vom größten Gewinn an"),
     ("run_intervals", "Der ehrliche Fehlerbalken kostet Genauigkeit"),
     ("run_sizes", "Reihenfolge bei abfallenden Gewichten"),
