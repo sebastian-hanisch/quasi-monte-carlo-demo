@@ -1,7 +1,6 @@
 # Randomisiertes Quasi-Monte-Carlo: wann gewinnt die Sobol-Folge? – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-quasi-monte-carlo-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-quasi-monte-carlo-demo.streamlit.app/)**
 
 Neuntes Stück der Linie **„Monte-Carlo-Schätzung und Varianzreduktion“** in der „Konzepte“-Reihe für die Website „Sebastian Hanisch – Operations Research und Machine Learning“ (die Linie wird erst vollständig veröffentlicht). Nachfolger von [latin-hypercube-demo](https://github.com/sebastian-hanisch/latin-hypercube-demo) (Stück 5, gleichmäßig abdecken je Eingabe): Hier füllt eine **Sobol-Folge** den Würfel auch in den Wechselwirkungen niedriger Ordnung gleichmäßig, mit **zufälligem Scrambling**, damit der Schätzer erwartungstreu bleibt und Fehlerbalken möglich sind. Vehikel sind die Netz-Integranden der Reihe (Zusammenhang eines Gitternetzes oder einer Hantel), nach Glattheit in drei Stufen, dazu ein Begleiter exp(Σ aᵢuᵢ) mit Dimensionsregler bis 64; Wahrheit, Varianz und effektive Dimension sind exakt.
 
@@ -130,4 +129,4 @@ Gebaut mit Streamlit, Plotly, NumPy und fpdf2.
 
 ---
 
-Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zu den Demos: [Interaktive Demos](https://sebastianhanisch.net/demos.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Monte-Carlo-Schätzung: vom Schätzer zur Wahl](https://sebastianhanisch.net/konzepte-monte-carlo.html).
